@@ -128,6 +128,7 @@ mod windows {
 
     pub fn that<T: AsRef<OsStr> + Sized>(path: T) -> io::Result<ExitStatus> {
         const SW_SHOW: c_int = 5;
+        const SW_HIDE: c_int = 0;
 
         let path = convert_path(path.as_ref())?;
         let operation: Vec<u16> = OsStr::new("open\0").encode_wide().collect();
@@ -138,7 +139,7 @@ mod windows {
                 path.as_ptr(),
                 ptr::null(),
                 ptr::null(),
-                SW_SHOW,
+                SW_HIDE,
             )
         };
         if result as c_int > 32 {
@@ -153,6 +154,7 @@ mod windows {
         app: impl Into<String>,
     ) -> io::Result<ExitStatus> {
         const SW_SHOW: c_int = 5;
+        const SW_HIDE: c_int = 0;
 
         let path = convert_path(path.as_ref())?;
         let operation: Vec<u16> = OsStr::new("open\0").encode_wide().collect();
@@ -166,7 +168,7 @@ mod windows {
                 app_name.as_ptr(),
                 path.as_ptr(),
                 ptr::null(),
-                SW_SHOW,
+                SW_HIDE,
             )
         };
         if result as c_int > 32 {
